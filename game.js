@@ -2,7 +2,7 @@
 const GAME_CONFIG = {
     PADDLE_WIDTH: 300,
     PADDLE_HEIGHT: 15,
-    PADDLE_COLOR: 'red',
+    PADDLE_COLOR: '#981518',
     PADDLE_SPEED: 6,
     BALL_RADIUS: 8,
     BALL_SPEED: 4,
@@ -10,7 +10,7 @@ const GAME_CONFIG = {
     BRICK_COLUMNS: 8,
     BRICK_HEIGHT: 20,
     BRICK_PADDING: 10,
-    BRICK_COLOR: '#FF4500',
+    BRICK_COLOR: '#304529',
     SCORE_FONT: '20px Arial',
     TEXT_COLOR: '#fff'
 };
@@ -126,6 +126,13 @@ function update() {
             ball.dy *= -1;
             brick.active = false;
             score++;
+            
+            // Zvuk prilikom razbijanja cigle
+            const brickBreakSound = document.getElementById('brakeBrick');
+            brickBreakSound.currentTime = 0; 
+            brickBreakSound.play();
+
+            // Ažuriranje highscore-a
             if (score > highScore) {
                 highScore = score;
                 localStorage.setItem('HighScore', highScore);
@@ -168,6 +175,7 @@ function draw() {
     ctx.shadowBlur = 20;
     ctx.shadowColor = "white";
     ctx.fillStyle = GAME_CONFIG.BRICK_COLOR;
+    ctx.strokeStyle = GAME_CONFIG.BRICK_COLOR;
     
     // Crtanje cigli sa senčanjem
     ctx.beginPath();
